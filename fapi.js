@@ -1,17 +1,27 @@
+import axios from "axios";
+
 const API_BASE_URL = "https://fapi.binance.com/fapi/v1/ticker";
 
-const getTickerPrice = async () => {
+export const getTickerPrice = async () => {
   try {
-    const response = await fetch(API_BASE_URL + "/price");
-    const data = await response.json();
+    const { data } = await axios.get(API_BASE_URL + "/price");
     return data;
   } catch (e) {
-      console.error(e);
+    console.error(e);
     return [];
   }
 };
 
-(async () => {
-  const data = await getTickerPrice();
-  console.log(data);
-})();
+export const get24hourVolumeBySymbol = async (_symbol) => {
+    try {
+      const { data } = await axios.get(API_BASE_URL + "/24hr", {
+          params: {
+              "symbol": _symbol
+          }
+      });
+      return data;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  };
