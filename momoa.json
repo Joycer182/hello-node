@@ -1,0 +1,6 @@
+{
+    "nombre": "Victor",
+    "edad": 38,
+    "isActive": true,
+    "balance": [1, 2, 3]
+}
