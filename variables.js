@@ -6,7 +6,7 @@ const isActive = true; // boolean
 
 let myArray = [ [1, 2, 3], edad, nombre, isActive];
 
-const victor = require("./momoa.json");
+const victor = require('./momoa.json');
 
 console.log(victor);
 
