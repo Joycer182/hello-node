@@ -216,31 +216,33 @@ let InformacionParaRegistrarBD = [];
         };
     });
 
-    // Conexión con la Base de Datos.
-    await ConectarBD();
-    InformacionParaRegistrarBD.map( async ( MonedaProcesada ) => {
-        // Verificación de la existencia de la Criptomoneda en la Base de Datos.
-        const VerificaRegistroExistenteBD = await VerificaRegistroBD(MonedaProcesada.symbol);
-        console.log(MonedaProcesada.symbol);
-        // Si el registro es nuevo (0) se crea, si el registro existe (1) se actualiza.
-        if ( VerificaRegistroExistenteBD[0].length == 1 ) {
-            // Se actualiza la información en la Base de Datos
-            const VerificaRegistroExistenteBD = await LeerTodoBD();
-            // await ActualizarRegistro(MonedaProcesada.symbol,MonedaProcesada.price,MonedaProcesada.priceChangePercent30min,MonedaProcesada.priceChangePercent24hr,MonedaProcesada.volumeChange24hr,MonedaProcesada.name,MonedaProcesada.ath,MonedaProcesada.ath_change_percentage,MonedaProcesada.market_cap_rank,MonedaProcesada.SentidoMovimiento);
-            console.log('Existe');
-        } else {
-            // Se crea el registro en en la Base de Datos
-            // await InsertarInformacion(MonedaProcesada.symbol,MonedaProcesada.price,MonedaProcesada.priceChangePercent30min,MonedaProcesada.priceChangePercent24hr,MonedaProcesada.volumeChange24hr,MonedaProcesada.name,MonedaProcesada.ath,MonedaProcesada.ath_change_percentage,MonedaProcesada.market_cap_rank,MonedaProcesada.SentidoMovimiento);
-            console.log('NO Existe');
-        };
-    });
-    // Desconexión de la Base de Datos.
-    await DesconectarBD();
+    console.log(InformacionParaRegistrarBD);
+
+    // // Conexión con la Base de Datos.
+    // await ConectarBD();
+    // InformacionParaRegistrarBD.map( async ( MonedaProcesada ) => {
+    //     // Verificación de la existencia de la Criptomoneda en la Base de Datos.
+    //     const VerificaRegistroExistenteBD = await VerificaRegistroBD(MonedaProcesada.symbol);
+    //     console.log(MonedaProcesada.symbol);
+    //     // Si el registro es nuevo (0) se crea, si el registro existe (1) se actualiza.
+    //     if ( VerificaRegistroExistenteBD[0].length == 1 ) {
+    //         // Se actualiza la información en la Base de Datos
+    //         const VerificaRegistroExistenteBD = await LeerTodoBD();
+    //         // await ActualizarRegistro(MonedaProcesada.symbol,MonedaProcesada.price,MonedaProcesada.priceChangePercent30min,MonedaProcesada.priceChangePercent24hr,MonedaProcesada.volumeChange24hr,MonedaProcesada.name,MonedaProcesada.ath,MonedaProcesada.ath_change_percentage,MonedaProcesada.market_cap_rank,MonedaProcesada.SentidoMovimiento);
+    //         console.log('Existe');
+    //     } else {
+    //         // Se crea el registro en en la Base de Datos
+    //         // await InsertarInformacion(MonedaProcesada.symbol,MonedaProcesada.price,MonedaProcesada.priceChangePercent30min,MonedaProcesada.priceChangePercent24hr,MonedaProcesada.volumeChange24hr,MonedaProcesada.name,MonedaProcesada.ath,MonedaProcesada.ath_change_percentage,MonedaProcesada.market_cap_rank,MonedaProcesada.SentidoMovimiento);
+    //         console.log('NO Existe');
+    //     };
+    // });
+    // // Desconexión de la Base de Datos.
+    // await DesconectarBD();
 
     console.timeEnd('Duracion del Ciclo');
 
     // Finalización del Proceso
     console.log("Fin del Proceso asíncrono.");
-    //process.exit(0);
+    process.exit(0);
 
 //})();

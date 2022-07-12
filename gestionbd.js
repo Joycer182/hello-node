@@ -98,24 +98,51 @@ export const ActualizarRegistro = async ( symbol , price , priceChangePercent30m
     };
 };
 
+
 // await ConectarBD();
+// (async () => {
+//     const Monedas = ['BTCUSDT','ETHUSDT','BTCBUSD'];
+//     Monedas.map( async ( MonedaEstudio ) => {
+//         let VerificaRegistroExistenteBD = await VerificaRegistroBD(MonedaEstudio);
+
+//         if ( VerificaRegistroExistenteBD[0].length == 1) {
+//             await ActualizarRegistro(MonedaEstudio,40.45,41.25,78.56,"55599.25",MonedaEstudio,3.09,-84.57006,1,1);
+//             console.log("::::    Actualizado    ::::");
+//         } else {
+//             await InsertarInformacion(MonedaEstudio,40.45,41.25,78.56,"55599.25",MonedaEstudio,3.09,-84.57006,1,1);
+//             console.log("::::    Creado    ::::");
+//         };
+
+//     });
+// })();
+// await DesconectarBD();
+
+
 // let VerificaRegistroExistenteBD = await VerificaRegistroBD('JOSE');
 // console.log(VerificaRegistroExistenteBD[0].length);
 // if ( VerificaRegistroExistenteBD[0].length == 1) {
 //     const PeticionConsulta = await LeerTodoBD();
-//     //console.log(PeticionConsulta[0]);
 //     console.log("Escribe 1");
 // } else {
 //     console.log("Borralo");
 // };
+
 // VerificaRegistroExistenteBD = await VerificaRegistroBD('BTCUSDT');
 // if ( VerificaRegistroExistenteBD[0].length == 1) {
-//     //const PeticionConsulta = await LeerTodoBD();
-//     await ActualizarRegistro("ADAUSDT",40.45,41.25,78.56,"55599.25","cardano",3.09,-84.57006,8,1);
-//     console.log("Escribe 2");
-//     //console.log(PeticionConsulta[0]);
+//     await ActualizarRegistro('BTCUSDT',40.45,41.25,78.56,"55599.25","bitcoin",3.09,-84.57006,1,1);
+//     console.log("Actualizado");
 // } else {
-//     console.log("Borralo");
+//     await InsertarInformacion('BTCUSDT',40.45,41.25,78.56,"55599.25","bitcoin",3.09,-84.57006,1,1);
+//     console.log("Creado");
+// };
+
+// VerificaRegistroExistenteBD = await VerificaRegistroBD('LUNA2BUSD');
+// if ( VerificaRegistroExistenteBD[0].length == 1) {
+//     await ActualizarRegistro('LUNA2BUSD',40.45,41.25,78.56,"55599.25","bitcoin",3.09,-84.57006,1,1);
+//     console.log("Actualizado");
+// } else {
+//     await InsertarInformacion('LUNA2BUSD',40.45,41.25,78.56,"55599.25","Terra Luna",3.09,-84.57006,1,1);
+//     console.log("Creado");
 // };
 // await DesconectarBD();
 
