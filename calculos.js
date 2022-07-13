@@ -1,5 +1,5 @@
 // Importación de las funciones del Manejador de la Base de Datos.
-import { ConectarBD , DesconectarBD , LeerTodoBD , VerificaRegistroBD , InsertarInformacion , ActualizarRegistro } from "./gestionbd.js";
+import { LeerTodoBD , VerificaRegistroBD , InsertarInformacion , ActualizarRegistro } from "./gestionbd.js";
 
 // Importación de las funciones del Manejador de la API de Futuros de Binance.
 import { ObtenerPrecioActual , ObtenerHistoricoCompleto , ObtenerHistoricoEspecifico , ObtenerHistorico24Hr } from "./binanceapi.js";

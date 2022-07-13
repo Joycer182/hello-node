@@ -4,45 +4,14 @@ import mysql from "mysql2/promise.js";
 // Fuente de ayuda: https://evertpot.com/executing-a-mysql-query-in-nodejs/
 
 // Credenciales para acceder a la Base de Datos.
-const connection = await mysql.createConnection({
-//const connection = mysql.createPool({
+// const connection = await mysql.createConnection({
+const connection = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "root",
     database: "CryptoMapa",
-    multipleStatements: true, // Consulta de multiples instrucciones
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
- });
-
-// Conexión a la Base de Datos.
-export const ConectarBD = async() => {
-    try {
-        const ConexionDB = await connection.connect();
-        //const ConexionDB = await connection.getConnection();
-        console.log("Conexión exitosa con la Base de Datos.");
-        return [];
-    } catch (e) {
-        console.log("Error con la conexión a la Base de Datos.");
-        console.error(e);
-        return [];
-    };
-};
-
-// Desconexión de la Base de Datos.
-export const DesconectarBD = async() => {
-    try {
-        const DesconexionDB = await connection.end();
-        //await connection.end();
-        console.log("Conexión finalizada con la Base de Datos.");
-        return [];
-    } catch (e) {
-        console.log("Error con la desconexión de la Base de Datos.");
-        console.error(e);
-        return [];
-    };
-};
+    multipleStatements: true
+});
 
 // Consulta a la Base de Datos. Extrae el TODO el contenido de la Tabla CryptoVariacion.
 export const LeerTodoBD = async() => {   
@@ -74,7 +43,9 @@ export const VerificaRegistroBD = async(Registro) => {
 export const InsertarInformacion = async ( symbol , price , priceChangePercent30min , priceChangePercent24hr, volumeChange24hr , name , ath , ath_change_percentage , market_cap_rank , SentidoMovimiento ) => {
     try {
         //await connection.execute(connection , `INSERT INTO CryptoVariacion (symbol , price , priceChangePercent30min , priceChangePercent24hr, volumeChange24hr, name, ath, ath_change_percentage, market_cap_rank, SentidoMovimiento) VALUES (${mysql.escape(symbol)} , ${mysql.escape(price)} , ${mysql.escape(priceChangePercent30min)} , ${mysql.escape(priceChangePercent24hr)} , ${mysql.escape(volumeChange24hr)} , ${mysql.escape(name)} , ${mysql.escape(ath)} , ${mysql.escape(ath_change_percentage)} , ${mysql.escape(market_cap_rank)} , ${mysql.escape(SentidoMovimiento)})`);
-        await connection.query(`INSERT INTO CryptoVariacion (symbol , price , priceChangePercent30min , priceChangePercent24hr, volumeChange24hr, name, ath, ath_change_percentage, market_cap_rank, SentidoMovimiento) VALUES (${mysql.escape(symbol)} , ${mysql.escape(price)} , ${mysql.escape(priceChangePercent30min)} , ${mysql.escape(priceChangePercent24hr)} , ${mysql.escape(volumeChange24hr)} , ${mysql.escape(name)} , ${mysql.escape(ath)} , ${mysql.escape(ath_change_percentage)} , ${mysql.escape(market_cap_rank)} , ${mysql.escape(SentidoMovimiento)})`);
+        // await connection.query(`INSERT INTO CryptoMapa.CryptoVariacion (symbol, price, priceChangePercent30min, priceChangePercent24hr, volumeChange24hr, name, ath, ath_change_percentage, market_cap_rank, SentidoMovimiento) VALUES (${mysql.escape(symbol)}, ${mysql.escape(price)}, ${mysql.escape(priceChangePercent30min)}, ${mysql.escape(priceChangePercent24hr)}, ${mysql.escape(volumeChange24hr)}, ${mysql.escape(name)}, ${mysql.escape(ath)}, ${mysql.escape(ath_change_percentage)}, ${mysql.escape(market_cap_rank)}, ${mysql.escape(SentidoMovimiento)}) ON DUPLICATE KEY UPDATE symbol = ${mysql.escape(symbol)}, price = ${mysql.escape(price)}, priceChangePercent30min = ${mysql.escape(priceChangePercent30min)}, priceChangePercent24hr = ${mysql.escape(priceChangePercent24hr)}, volumeChange24hr = ${mysql.escape(volumeChange24hr)}, name = ${mysql.escape(name)}, ath = ${mysql.escape(ath)}, ath_change_percentage = ${mysql.escape(ath_change_percentage)}, market_cap_rank = ${mysql.escape(market_cap_rank)}, SentidoMovimiento = ${mysql.escape(SentidoMovimiento)};`);
+        console.log('Si entre a la funcion insertar');
+        await connection.query(`INSERT INTO CryptoMapa.CryptoVariacion (symbol, price, priceChangePercent30min, priceChangePercent24hr, volumeChange24hr, name, ath, ath_change_percentage, market_cap_rank, SentidoMovimiento) VALUES (${mysql.escape(symbol)}, ${mysql.escape(price)}, ${mysql.escape(priceChangePercent30min)}, ${mysql.escape(priceChangePercent24hr)}, ${mysql.escape(volumeChange24hr)}, ${mysql.escape(name)}, ${mysql.escape(ath)}, ${mysql.escape(ath_change_percentage)}, ${mysql.escape(market_cap_rank)}, ${mysql.escape(SentidoMovimiento)}) AS valores ON DUPLICATE KEY UPDATE price = valores.price, priceChangePercent30min = valores.priceChangePercent30min, priceChangePercent24hr = valores.priceChangePercent24hr, volumeChange24hr = valores.volumeChange24hr, name = valores.name, ath = valores.ath, ath_change_percentage = valores.ath_change_percentage, market_cap_rank = valores.market_cap_rank, SentidoMovimiento = valores.SentidoMovimiento`);
         console.log("Información agregada correctamente a la Base de Datos.");
         return [];
     } catch (e) {
@@ -98,24 +69,20 @@ export const ActualizarRegistro = async ( symbol , price , priceChangePercent30m
     };
 };
 
+const TEST = await LeerTodoBD();
+console.log(TEST[0].length);
+await InsertarInformacion('ANCBUSD',4000.45,41.25,78.56,55599.25,'MonedaEstudio',3.09,-84.57006,1,1);
 
-// await ConectarBD();
-// (async () => {
-//     const Monedas = ['BTCUSDT','ETHUSDT','BTCBUSD'];
-//     Monedas.map( async ( MonedaEstudio ) => {
-//         let VerificaRegistroExistenteBD = await VerificaRegistroBD(MonedaEstudio);
+    const Monedas = ['BTCUSDT','ETHUSDT','BTCBUSD','ANCBUSD'];
+    Monedas.map( ( MonedaEstudio ) => {
 
-//         if ( VerificaRegistroExistenteBD[0].length == 1) {
-//             await ActualizarRegistro(MonedaEstudio,40.45,41.25,78.56,"55599.25",MonedaEstudio,3.09,-84.57006,1,1);
-//             console.log("::::    Actualizado    ::::");
-//         } else {
-//             await InsertarInformacion(MonedaEstudio,40.45,41.25,78.56,"55599.25",MonedaEstudio,3.09,-84.57006,1,1);
-//             console.log("::::    Creado    ::::");
-//         };
+        console.log(connection.state);
+        InsertarInformacion(MonedaEstudio,4000.45,41.25,78.56,55599.25,MonedaEstudio,3.09,-84.57006,1,1);
+        console.log('Iteracion para insertar');
+        console.log(' ');
 
-//     });
-// })();
-// await DesconectarBD();
+    });
+    process.exit(0);
 
 
 // let VerificaRegistroExistenteBD = await VerificaRegistroBD('JOSE');
